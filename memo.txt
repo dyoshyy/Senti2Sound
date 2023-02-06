@@ -1,2 +1,4 @@
 ・optimizer
 ・midiからwavへの変換
+・和音の実装
+・app

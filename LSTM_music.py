@@ -20,13 +20,6 @@ from tensorflow.python.client import device_lib
 device_lib.list_local_devices()
 
 from music21 import *
-from midi2audio import FluidSynth
-import fluidsynth
-import pretty_midi
-import sounddevice as sd
-import scipy
-from scipy import io
-from scipy.io import wavfile
 from pprint import pprint
 
 
@@ -243,10 +236,11 @@ meas.makeMeasures(inPlace=True)
 #meas.show('mxl', addEndTimes=True)
 meas.write("midi", "generated.mid")
 
-
-fs = FluidSynth(sound_font='SGM.sf2')
+'''
+fs = FluidSynth()
 input = 'generated' + '.mid'
 output = 'output' + '.wav'
 fs.midi_to_audio( input , output )
+'''
 
 #meas.show('musicxml')
