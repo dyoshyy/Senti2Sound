@@ -2,3 +2,8 @@
 ・midiからwavへの変換
 ・和音の実装
 ・app
+
+next_indexは辞書の要素数じゃないといけない
+→ sample(preds, diversity)の値がおかしい
+→ そもそもpredsのサイズが1491もある (辞書は31ぐらい)
+→　modelがおかしいのでは？
