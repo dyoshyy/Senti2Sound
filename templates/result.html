@@ -1,14 +1,26 @@
 {% extends "layout.html " %}
 {% block content %}
 <main>
+
     <h1>{{senti}}</h1>
     <script
         src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
-
-    <midi-player src="http://localhost:5000/play_midi/pos.mid" sound-font
-        visualizer="#myVisualizer">
+    
+    <div class="midi-player">
+    <midi-player 
+    src="static/generated/{{senti}}.mid"
+    sound-font visualizer="#myPianoRollVisualizer">
     </midi-player>
-    <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer>
+
+    <midi-visualizer type="piano-roll" id="myPianoRollVisualizer"
+        src="static/generated/{{senti}}.mid">
+    </midi-visualizer>
+
+    <midi-visualizer type="staff" id="myStaffVisualizer"
+        src="static/generated/{{senti}}.mid">
+    </midi-visualizer>
+    </div>
+
 </main>
 
 {% endblock %}

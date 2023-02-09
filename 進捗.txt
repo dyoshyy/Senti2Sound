@@ -12,4 +12,9 @@
     →とりあえず動いてそう
     ・textからmusicXMLに変換するときにstreamオブジェクトに和音の追加を実装中
     →完了
-    ・app.py作成
+    ・app.py作成 indexページと入力した単語からsentimental_analyzerを動かすとこまで
+
+2/8
+    ・今のところpositiveのときのモデルのみ動く　→　モデルと読み込むmxlファイルが一致しないといけないから学習し直し
+    ・html上でmidiファイルの再生完了
+    →次はmxl集めとモデル学習

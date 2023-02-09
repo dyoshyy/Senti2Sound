@@ -15,11 +15,5 @@ def post_senti():
         generate(result)
         return render_template('result.html', senti = result)
 
-@app.route("/play_midi/<path:filename>")
-def play_midi(filename):
-    print('sending midi fiel...')
-    #filename = 'generated/' + str(senti) + '.mid'
-    return send_from_directory('generated',filename) #(filename, mimetype="audio/midi")
-
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,12 +1,7 @@
 from __future__ import print_function
 import tensorflow as tf
-from tensorflow.python.keras.callbacks import LambdaCallback
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.models import load_model
-from tensorflow.python.keras.layers import Dense
-from tensorflow.python.keras.layers import LSTM
-from tensorflow.python.keras.optimizers import adagrad_v2
-from tensorflow.python.keras.callbacks import EarlyStopping
 import numpy as np
 import random
 from tqdm import tqdm
@@ -14,12 +9,9 @@ import music21 as m21
 import os
 import glob
 import shutil
-from tensorflow.python.client import device_lib
-device_lib.list_local_devices()
-
+#from tensorflow.python.client import device_lib
+#device_lib.list_local_devices()
 from music21 import *
-from pprint import pprint
-
 
 def generate(senti):
 
@@ -117,7 +109,7 @@ def generate(senti):
     else:
         print('--------Model does not exist----------')
 
-    melo_sentence = make_melody(60)
+    melo_sentence = make_melody(30)
     print(melo_sentence)
     # メロディをmusicXMLに変換する
     meas = m21.stream.Stream()
@@ -137,5 +129,5 @@ def generate(senti):
 
     meas.makeMeasures(inPlace=True)
     meas.write("midi", str(senti) + ".mid")
-    shutil.move(str(senti)+".mid", r'generated\\'+str(senti)+'.mid')
+    shutil.move(str(senti)+".mid", r'static\\generated\\'+str(senti)+'.mid')
     #meas.show('musicxml')
