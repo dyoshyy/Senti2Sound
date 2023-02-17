@@ -12,6 +12,7 @@ import shutil
 #from tensorflow.python.client import device_lib
 #device_lib.list_local_devices()
 from music21 import *
+from fractions import Fraction
 
 def generate(senti):
 
@@ -20,7 +21,7 @@ def generate(senti):
 
     xmlpath = bs + 'musicxml\\' + str(senti) + DS
 
-    model_path_base = bs + 'models\\' + str(senti) + '\\melo_model'
+    model_path_base = bs + 'models\\' + str(senti) + '\\model_' + str(senti)
     model_weights_path = model_path_base + 'w.hdf5' 
     model_save_path = model_path_base + '.hdf5' 
 
@@ -106,6 +107,7 @@ def generate(senti):
     if (os.path.exists(model_save_path) and os.path.exists(model_weights_path)):
         model = load_model(model_save_path,compile=False)
         model.load_weights(model_weights_path)
+        model.summary()
     else:
         print('--------Model does not exist----------')
 
@@ -117,6 +119,7 @@ def generate(senti):
     melo = melo_sentence.split()
     for m in melo:
         ptches, dist = m.split('_')
+        dist = Fraction(dist)
         if (ptches == 'rest'):
             n = m21.note.Rest(quarterLength=float(dist))
         elif '~' in ptches:

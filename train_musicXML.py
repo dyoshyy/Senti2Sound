@@ -5,38 +5,34 @@ from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.models import load_model
 from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.layers import LSTM
-from tensorflow.python.keras.optimizers import adagrad_v2
-from tensorflow.python.keras.callbacks import EarlyStopping
 import numpy as np
 import random
 import sys
-import io
 from tqdm import tqdm
 import music21 as m21
 import os
 import glob
 from tensorflow.python.client import device_lib
 device_lib.list_local_devices()
-
+from fractions import Fraction
 from music21 import *
-from pprint import pprint
+import shutil
+import sys
 
-
-us = environment.UserSettings()
-#us.create() #first time only
-us['lilypondPath'] = 'C:/LilyPond/usr/bin/lilypond.exe'
-us['musescoreDirectPNGPath'] = 'C:/Program Files/MuseScore4/bin/MuseScore4.exe'
-us['musicxmlPath'] = 'C:/Program Files/MuseScore4/bin/MuseScore4.exe'
+args = sys.argv
+#senti = input("input the senti:")
+senti = args[1]
+epochs = int(args[2])
 
 DS = os.sep
 bs = os.path.dirname(__file__) + DS
-xmlpath = bs + 'musicxml_simple' + DS
+xmlpath = bs + 'musicxml\\' + senti + DS
 
 #bs = '/content/drive/MyDrive'
 #xmlpath = '/content/drive/MyDrive/musicXML'
 
-model_weights_path = 'melo_model' + 'w.hdf5'
-model_save_path = 'melo_model' + '.hdf5'
+model_weights_path = 'model_' + senti + 'w.hdf5'
+model_save_path = 'model_' + senti + '.hdf5'
 make_model = True
 # music_keys = ('C', 'D', 'E', 'F', 'F#', 'G', 'A', 'B')
 music_keys = ('C')
@@ -87,8 +83,8 @@ for i in range(0, len(text) - maxlen, step):
     next_chars.append(text[i + maxlen])
 print('nb sequences:', len(sentences))
 
-pprint(char_indices)
-pprint(indices_char)
+#pprint(char_indices)
+#pprint(indices_char)
 
 print('sentence:')
 #pprint(sentences)
@@ -112,7 +108,7 @@ model.add(LSTM(500,input_shape=(maxlen, len(char_indices)))) #len(chars) → len
 model.add(Dense(len(char_indices), activation='softmax'))  #len(chars) → len(char_indices)に変更
 #opt = tf.optimizers.SGD(learning_rate=0.01)
 model.compile(loss='categorical_crossentropy',
-            optimizer='sgd', 
+            optimizer='adagrad', 
             run_eagerly=True)
 #model.summary()
 
@@ -129,7 +125,6 @@ def on_epoch_end(epoch, _):
     print()
     print('------- Generating text after Epoch: %d' % epoch)
     start_index = random.randint(0, len(text) - maxlen - 1)
-    start_index = 0  # テキストの最初からスタート
     for diversity in [0.2]:  # ここは0.2のみ？
         print('--------diversity:', diversity)
 
@@ -168,7 +163,7 @@ def on_train_end(logs):
     model.save_weights(model_weights_path)
     model.save(model_save_path)
 
-
+'''
 def make_melody(length=200):
     start_index = random.randint(0, len(text) - maxlen - 1)
     # start_index = 0 #テキストの最初からスタート
@@ -204,6 +199,8 @@ def make_melody(length=200):
         print()
 
     return generated
+'''
+    
 
 #モデルがある場合は読み込む　なければ学習
 if (os.path.exists(model_save_path) and os.path.exists(model_weights_path)):
@@ -213,8 +210,15 @@ if (os.path.exists(model_save_path) and os.path.exists(model_weights_path)):
 else:
 	print_callbak = LambdaCallback(on_epoch_end=on_epoch_end, on_train_end=on_train_end)
 	es_cb = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=7, verbose=0, mode='auto')
-	model.fit(x, y, batch_size=128, epochs=3, callbacks=[es_cb,print_callbak])
+	model.fit(x, y, batch_size=128, epochs=epochs, callbacks=[es_cb,print_callbak])
 
+
+print("train comleted")
+
+shutil.move(model_weights_path, r'models\\'+str(senti) + "\\" + model_weights_path)
+shutil.move(model_save_path, r'models\\'+str(senti) + "\\" + model_save_path)
+
+'''
 print('-------print score')
 melo_sentence = make_melody(60)
 print(melo_sentence)
@@ -224,6 +228,7 @@ meas.append(m21.meter.TimeSignature('4/4'))
 melo = melo_sentence.split()
 for m in melo:
     ptches, dist = m.split('_')
+    dist = Fraction(dist)
     if (ptches == 'rest'):
         n = m21.note.Rest(quarterLength=float(dist))
     elif '~' in ptches:
@@ -241,3 +246,4 @@ meas.makeMeasures(inPlace=True)
 meas.write("midi", "generated.mid")
 
 meas.show('musicxml')
+'''
