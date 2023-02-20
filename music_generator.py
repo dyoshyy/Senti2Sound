@@ -1,17 +1,15 @@
 from __future__ import print_function
-import tensorflow as tf
-from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.models import load_model
 import numpy as np
 import random
 from tqdm import tqdm
 import music21 as m21
+from music21 import *
+
 import os
 import glob
 import shutil
-#from tensorflow.python.client import device_lib
-#device_lib.list_local_devices()
-from music21 import *
+
 from fractions import Fraction
 
 def generate(senti):

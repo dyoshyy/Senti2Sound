@@ -1,4 +1,3 @@
-import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 # 単語の感情分析
