@@ -4,4 +4,4 @@ music21==8.1.0
 numpy==1.23.5
 nltk==3.7
 tqdm==4.64.1
-tensorflow-cpu==1.15.5
+tensorflow==1.15.5
