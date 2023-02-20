@@ -22,7 +22,9 @@ import sys
 args = sys.argv
 #senti = input("input the senti:")
 senti = args[1]
-epochs = int(args[2])
+epochs = 300
+if len(args)==3:
+    epochs = int(args[2])
 
 DS = os.sep
 bs = os.path.dirname(__file__) + DS
@@ -162,44 +164,6 @@ def on_train_end(logs):
     print('----- saving model...')
     model.save_weights(model_weights_path)
     model.save(model_save_path)
-
-'''
-def make_melody(length=200):
-    start_index = random.randint(0, len(text) - maxlen - 1)
-    # start_index = 0 #テキストの最初からスタート
-
-    print(start_index)
-    for diversity in [0.2]:  # ここは0.2のみ？
-        print('--------diversity:', diversity)
-
-        generated = ''
-        sentence = text[start_index: start_index + maxlen]
-        # sentenceはリストなので文字列へ変換
-        generated += ''.join(sentence)
-        print(sentence)
-
-        print('--------- Generating with seed:"' + "".join(sentence) + '"')
-        sys.stdout.write(generated)
-
-        for i in range(length):
-            x_pred = np.zeros((1, maxlen, len(char_indices))) #len(chars) → len(char_indices)に変更
-            for t, char in enumerate(sentence):
-                x_pred[0, t, char_indices[char]] = 1.
-
-            preds = model.predict(x_pred, verbose=0)[0]
-            next_index = sample(preds, diversity)
-            next_char = indices_char[next_index]
-
-            generated += next_char
-            sentence = sentence[1:]
-            sentence.append(next_char)
-
-            #sys.stdout.write(next_char)
-            #sys.stdout.flush()
-        print()
-
-    return generated
-'''
     
 
 #モデルがある場合は読み込む　なければ学習
@@ -209,41 +173,11 @@ if (os.path.exists(model_save_path) and os.path.exists(model_weights_path)):
     model.load_weights(model_weights_path)
 else:
 	print_callbak = LambdaCallback(on_epoch_end=on_epoch_end, on_train_end=on_train_end)
-	es_cb = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=7, verbose=0, mode='auto')
-	model.fit(x, y, batch_size=128, epochs=epochs, callbacks=[es_cb,print_callbak])
+	es_cb = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=5, verbose=0, mode='auto')
+	model.fit(x, y, batch_size=64, epochs=epochs, callbacks=[es_cb,print_callbak])
 
 
 print("train comleted")
 
 shutil.move(model_weights_path, r'models\\'+str(senti) + "\\" + model_weights_path)
 shutil.move(model_save_path, r'models\\'+str(senti) + "\\" + model_save_path)
-
-'''
-print('-------print score')
-melo_sentence = make_melody(60)
-print(melo_sentence)
-# メロディをmusicXMLに変換する
-meas = m21.stream.Stream()
-meas.append(m21.meter.TimeSignature('4/4'))
-melo = melo_sentence.split()
-for m in melo:
-    ptches, dist = m.split('_')
-    dist = Fraction(dist)
-    if (ptches == 'rest'):
-        n = m21.note.Rest(quarterLength=float(dist))
-    elif '~' in ptches:
-        ptche_list = ptches.split('~')
-        n = m21.chord.Chord(ptche_list,quarterLenght=float(dist))
-    else:
-        n = m21.note.Note(ptches, quarterLength=float(dist))
-
-    meas.append(n)
-
-    # print(note_dt)
-
-meas.makeMeasures(inPlace=True)
-#meas.show('mxl', addEndTimes=True)
-meas.write("midi", "generated.mid")
-
-meas.show('musicxml')
-'''

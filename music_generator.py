@@ -107,11 +107,10 @@ def generate(senti):
     if (os.path.exists(model_save_path) and os.path.exists(model_weights_path)):
         model = load_model(model_save_path,compile=False)
         model.load_weights(model_weights_path)
-        model.summary()
     else:
         print('--------Model does not exist----------')
 
-    melo_sentence = make_melody(30)
+    melo_sentence = make_melody(60)
     print(melo_sentence)
     # メロディをmusicXMLに変換する
     meas = m21.stream.Stream()

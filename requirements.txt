@@ -3,3 +3,5 @@ flask==2.2.2
 music21==8.1.0
 numpy==1.23.5
 nltk==3.7
+tqdm==4.64.1
+tensorflow==2.10.0
