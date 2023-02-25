@@ -12,7 +12,7 @@ import shutil
 
 from fractions import Fraction
 
-def generate(senti):
+def generate(senti,length,inst_id):
 
     DS = os.sep
     bs = os.path.dirname(__file__) + DS
@@ -60,7 +60,7 @@ def generate(senti):
             count += 1
     # 逆引き辞書を辞書から作成する
     indices_char = dict([(value, key) for (key, value) in char_indices.items()])
-    maxlen = 5 #時系列を何個ずつに分けて学習するか
+    maxlen = 10 #時系列を何個ずつに分けて学習するか
     step = 1
     sentences = []
     next_chars = []
@@ -108,11 +108,18 @@ def generate(senti):
     else:
         print('--------Model does not exist----------')
 
-    melo_sentence = make_melody(60)
+    melo_sentence = make_melody(length)
     print(melo_sentence)
     # メロディをmusicXMLに変換する
     meas = m21.stream.Stream()
     meas.append(m21.meter.TimeSignature('4/4'))
+
+    #instr = instrument.Trumpet()
+    instr = instrument.instrumentFromMidiProgram(inst_id)
+    meas.insert(instr)
+    #instr.midiProgram = 56
+
+
     melo = melo_sentence.split()
     for m in melo:
         ptches, dist = m.split('_')
@@ -124,6 +131,7 @@ def generate(senti):
             n = m21.chord.Chord(ptche_list,quarterLenght=float(dist))
         else:
             n = m21.note.Note(ptches, quarterLength=float(dist))
+
 
         meas.append(n)
 

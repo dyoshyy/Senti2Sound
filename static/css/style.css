@@ -5,6 +5,176 @@
 }
 
 body {
+  background: -moz-linear-gradient(45deg, #425061 0%, #2b193a 29%, #19435c 66%, #ffd664 100%);
+  background: -webkit-linear-gradient(45deg, #425061 0%, #2b193a 29%, #19435c 66%, #ffd664 100%);
+  background: linear-gradient(45deg, #425061 0%, #2b193a 29%, #19435c 66%, #ffd664 100%);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+  /*min-height: calc(100vh - 2rem);*/
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-evenly;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+body::before,
+body::after {
+  content: "";
+  width: 50vmax;
+  height: 60vmax;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.041);
+  left: -20vmin;
+  top: -20vmin;
+  animation: morph 18s linear infinite alternate, spin 20s linear infinite;
+  z-index: 1;
+  will-change: border-radius, transform;
+  transform-origin: 55% 55%;
+  pointer-events: none;
+}
+
+body::after {
+  width: 70vmin;
+  height: 70vmin;
+  left: auto;
+  right: -10vmin;
+  top: auto;
+  bottom: 0;
+  animation: morph 10s linear infinite alternate, spin 26s linear infinite reverse;
+  transform-origin: 20% 20%;
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0 50%
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0 50%
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0 50%
+  }
+}
+
+@keyframes morph {
+  0% {
+    border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%;
+  }
+
+  100% {
+    border-radius: 40% 60%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.st0 {
+  display: none;
+}
+
+.st1 {
+  display: inline;
+}
+
+.st2 {
+  opacity: 0.29;
+}
+
+.st3 {
+  fill: #FFFFFF;
+}
+
+.st4 {
+  clip-path: url(#SVGID_2_);
+  fill: #FFFFFF;
+}
+
+.st5 {
+  clip-path: url(#SVGID_4_);
+}
+
+.st6 {
+  clip-path: url(#SVGID_6_);
+}
+
+.st7 {
+  clip-path: url(#SVGID_8_);
+}
+
+.st8 {
+  clip-path: url(#SVGID_10_);
+}
+
+.st9 {
+  fill: none;
+}
+
+.st10 {
+  clip-path: url(#SVGID_12_);
+}
+
+.st11 {
+  opacity: 0.7;
+}
+
+.st12 {
+  clip-path: url(#SVGID_14_);
+}
+
+.st13 {
+  opacity: 0.2;
+}
+
+.st14 {
+  clip-path: url(#SVGID_16_);
+}
+
+.st15 {
+  opacity: 0.3;
+  fill: #FFFFFF;
+  enable-background: new;
+}
+
+body {
   margin: 0;
   font-family: Montserrat;
   color: #ffffff;
@@ -18,7 +188,7 @@ header {
   height: 60px;
   width: 100%;
   padding: 0px 15px;
-  background-color: rgb(41, 61, 99);
+  background-color: rgb(17, 25, 39);
   position: fixed;
   top: 0;
   z-index: 10;
@@ -33,13 +203,13 @@ header nav {
   margin: 0 0 0 auto;
 }
 
-header nav li{
-  transition: all  0.2s ease;
+header nav li {
+  transition: all 0.2s ease;
 }
 
-header nav li:hover{
+header nav li:hover {
   background-color: rgb(147, 175, 226);
-  transition: all  0.2s ease;
+  transition: all 0.2s ease;
 }
 
 header ul {
@@ -73,20 +243,10 @@ main {
 }
 
 .submit {
-  font-size: 100px;
   padding: 100px 0;
 }
 
-.text-box{
-  width: 300px;
-  height: 50px;
-  font-size: 20px;
-  transition: all  0.2s ease;
-}
 
-.text-box:focus{
-  width: 400px;
-}
 
 /* 表（数値を入力する部分）の設定 */
 table {
@@ -120,21 +280,23 @@ td {
 }
 
 /* 「click」ボタンのスタイル */
-.button{
+.button {
   text-align: center;
   margin: 10px auto;
+  margin-top: 150px;
   padding: 1px;
-  width: 150px;
-  font-size: 20px;
+  width: 120px;
+  font-size: 25px;
+  font-weight: bold;
   color: black;
-  background-color: rgb(243, 214, 150);
-  border-radius: 30vh;
-  transition: all  0.4s ease;
+  background-color: #c5b840;
+  border-radius: 10px;
+  transition: all 0.4s ease;
 }
 
 .button:hover {
   background-color: rgb(250, 200, 63);
-  transition: all  0.4s ease;
+  transition: all 0.4s ease;
 }
 
 
@@ -152,10 +314,259 @@ footer {
   /* 幅いっぱいを指定 */
   height: 50px;
   /* 高さを指定 */
-  background-color: rgb(41, 61, 99);
+  background-color: rgb(17, 25, 39);
   text-align: end or right;
 }
 
 .footer_logo {
   line-height: 50px;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans';
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+img a {
+  border: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+
+
+/* *********************************　
+selector
+*********************************** */
+/*------------∞
+|  reset.css  |
+∞------------*/
+
+/* ∞∞ global ∞∞ */
+* {
+  position: relative;
+}
+
+button,
+select {
+  text-transform: none;
+  cursor: pointer;
+}
+
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+/* ∞∞ link styling ∞∞ */
+a {
+  display: inline;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* ∞∞ webkit ∞∞ */
+* {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased !important;
+}
+
+blockquote {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+}
+
+fieldset {
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  -webkit-padding-before: 0;
+  -webkit-padding-start: 0;
+  -webkit-padding-end: 0;
+  -webkit-padding-after: 0;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  height: auto;
+}
+
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration,
+progress {
+  -webkit-appearance: none;
+}
+
+
+
+
+.select_expand {
+  width: 0;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.select_expand::after {
+  content: '\003E';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scaleY(1.75);
+  color: #3e3e3e;
+  font-size: 28px;
+  pointer-events: none;
+  z-index: 2;
+  transition: all 250ms cubic-bezier(.4, .25, .3, 1);
+  opacity: .6;
+}
+
+.select_expand:hover::after {
+  opacity: 1
+}
+
+.select_expand:checked::after {
+  transform: translate(-50%, -50%) rotate(90deg) scaleX(-1) scaleY(1.75);
+}
+
+.select_expandLabel {
+  display: block;
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.select_close {
+  display: none
+}
+
+.select_closeLabel {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.select_items {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 2px solid #c5b840;
+  border-radius: 2px;
+  padding-top: 40px;
+}
+
+.select_input {
+  display: none
+}
+
+.select_label {
+  transition: all 250ms cubic-bezier(.4, .25, .3, 1);
+  display: block;
+  height: 0;
+  font-size: 1.2rem;
+  line-height: 40px;
+  overflow: hidden;
+  color: #3e3e3e;
+  background-color: #fff;
+  cursor: pointer;
+  padding-left: 20px;
+}
+.select_label-placeholder1 {
+  height: 40px;
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+  left: 40px;
+  opacity: .6;
+  background-color: transparent;
+}
+
+.select_label-placeholder2 {
+  height: 40px;
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+  left: 90px;
+  opacity: .6;
+  background-color: transparent;
+}
+
+.select_expand:checked+.select_closeLabel {
+  display: block;
+}
+
+.select_expand:checked+.select_closeLabel+.select_options .select_label {
+  height: 40px;
+}
+
+.select_expand:checked+.select_closeLabel+.select_options .select_label:hover {
+  background-color: #f7f7f7
+}
+
+.select_expand:checked+.select_closeLabel+.select_options+.select_expandLabel {
+  display: none
+}
+
+.select_input:checked+.select_label {
+  height: 40px;
+  margin-top: -40px;
 }

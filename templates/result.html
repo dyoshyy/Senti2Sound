@@ -1,25 +1,111 @@
-{% extends "templates/layout.html " %}
+{% extends "layout.html" %}
 {% block content %}
+<style>
+    .midi-player{
+        width: 50%;
+        margin: 0 auto;
+        padding-top: 200px;
+    }
+
+    midi-player {
+        display: block;
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+    midi-player::part(control-panel) {
+        background: #ffd664;
+        border: 2px solid #000;
+        border-radius: 10px 10px 0 0;
+    }
+
+    midi-player::part(play-button) {
+        color: rgb(12, 17, 37);
+        border: 2px solid currentColor;
+        background-color: rgb(53, 80, 119);
+        border-radius: 20px;
+        transition: all 0.2s;
+        content: 'hello';
+    }
+
+    midi-player::part(play-button):hover {
+        color: rgb(40, 56, 119);
+        background-color: rgb(93, 140, 206);
+        border-radius: 10px;
+    }
+
+    midi-player::part(time) {
+        font-family: Montserrat;
+    }
+
+    /* Custom visualizer style */
+    midi-visualizer .piano-roll-visualizer {
+        background: rgba(211, 211, 185, 0.548);
+        border: 2px solid black;
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        margin-top: 0;
+        height: 100px;
+        overflow: auto;
+    }
+
+    midi-visualizer svg rect.note {
+        opacity: 0.6;
+        stroke-width: 2;
+    }
+
+    midi-visualizer svg rect.note[data-instrument="0"] {
+        fill: rgb(99, 136, 206);
+        stroke: rgb(15, 8, 122);
+    }
+
+    midi-visualizer svg rect.note[data-instrument="2"] {
+        fill: #2ee;
+        stroke: #055;
+    }
+
+    midi-visualizer svg rect.note[data-is-drum="true"] {
+        fill: #888;
+        stroke: #888;
+    }
+
+    midi-visualizer svg rect.note.active {
+        opacity: 0.9;
+        stroke: #000;
+    }
+
+    .button{
+        margin-top: 50px;
+        width: auto;
+    }
+
+    h1{
+        padding-top: 100px;
+    }
+</style>
+
+
 <main>
 
-    <h1>{{senti}}</h1>
+    <h1>{{msg}}</h1>
+
+
+    <div class="midi-player">
+        <midi-player src="static/generated/{{senti}}.mid"
+            sound-font = "https://storage.googleapis.com/magentadata/js/soundfonts/sgm_plus"
+            visualizer="#myPianoRollVisualizer">
+        </midi-player>
+
+        <midi-visualizer type="piano-roll" id="myPianoRollVisualizer" src="static/generated/{{senti}}.mid">
+        </midi-visualizer>
+
+
+    </div>
+
+    <button class="button" onclick="location.href='/download'" >曲をダウンロード</button>
+
     <script
         src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
-    
-    <div class="midi-player">
-    <midi-player 
-    src="static/generated/{{senti}}.mid"
-    sound-font visualizer="#myPianoRollVisualizer">
-    </midi-player>
-
-    <midi-visualizer type="piano-roll" id="myPianoRollVisualizer"
-        src="static/generated/{{senti}}.mid">
-    </midi-visualizer>
-
-    <midi-visualizer type="staff" id="myStaffVisualizer"
-        src="static/generated/{{senti}}.mid">
-    </midi-visualizer>
-    </div>
 
 </main>
 

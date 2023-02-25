@@ -76,7 +76,7 @@ for word in chars:
         print(count, word)  # 登録した単語を表示
 # 逆引き辞書を辞書から作成する
 indices_char = dict([(value, key) for (key, value) in char_indices.items()])
-maxlen = 5 #時系列を何個ずつに分けて学習するか
+maxlen = 10 #時系列を何個ずつに分けて学習するか
 step = 1
 sentences = []
 next_chars = []
@@ -110,7 +110,7 @@ model.add(LSTM(500,input_shape=(maxlen, len(char_indices)))) #len(chars) → len
 model.add(Dense(len(char_indices), activation='softmax'))  #len(chars) → len(char_indices)に変更
 #opt = tf.optimizers.SGD(learning_rate=0.01)
 model.compile(loss='categorical_crossentropy',
-            optimizer='adagrad', 
+            optimizer='adam', 
             run_eagerly=True)
 #model.summary()
 
@@ -174,7 +174,7 @@ if (os.path.exists(model_save_path) and os.path.exists(model_weights_path)):
 else:
 	print_callbak = LambdaCallback(on_epoch_end=on_epoch_end, on_train_end=on_train_end)
 	es_cb = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=5, verbose=0, mode='auto')
-	model.fit(x, y, batch_size=64, epochs=epochs, callbacks=[es_cb,print_callbak])
+	model.fit(x, y, batch_size=32, epochs=epochs, callbacks=[es_cb,print_callbak])
 
 
 print("train comleted")

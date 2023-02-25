@@ -1,14 +1,173 @@
-{% extends "templates/layout.html " %}
+{% extends "layout.html" %}
 {% block content %}
-    <main>
-        <h1>Type a word.</h1>
-        <h1>I will make special music for you.</h1>
-        <div class="submit">
-        <label for="feeling">How are you feeling now?</label>
+<style>
+
+
+    .title{
+        font-size: 30px;
+        margin-top: 120px;
+        font-weight: bold;
+        line-height: 80px;
+    }
+
+    .select span {
+        text-align: center;
+    }
+
+    h1 {
+        margin: 40px;
+    }
+
+    .submit label {
+        font-size: 24px;
+    }
+
+    .text-box {
+        width: 400px;
+        height: 80px;
+        font-size: 35px;
+        text-align: center;
+        transition: all 0.2s ease;
+        border: 2px solid #c5b840;
+    }
+
+    .text-box:focus {
+        width: 550px;
+    }
+
+    .select-length {
+        float: left;
+        width: 200px;
+        height: 40px;
+        cursor: pointer;
+        background-color: white;
+        box-shadow: 0 2px 0 white;
+        border-radius: 5px;
+        text-align: center;
+        margin-left: 35%;
+        margin-right: 0 auto;
+        margin-top: 50px;
+    }
+
+
+
+    .select-font {
+        float: right;
+        width: 250px;
+        height: 40px;
+        cursor: pointer;
+        background-color: white;
+        box-shadow: 0 2px 0 white;
+        border-radius: 5px;
+        text-align: center;
+        margin-right: 35%;
+        margin-left: 0 auto;
+        margin-top: 50px;
+    }
+
+
+</style>
+
+<main>
+
+
+    <div class="title">
+        今の気分を入力してください<br>
+        単語を分析してあなただけの音楽を作ります
+    </div>
+
+    <div class="submit">
+
         <form action="generate" method="post">
-            <input class="text-box" type="text" id="feeling" placeholder="ex) Sad/Happy" name="senti"><br>
-            <button class="button" type="submit">Submit</button>
+            <input class="text-box" type="text" id="feeling" placeholder="例）疲れた,ワクワク" name="senti">
+
+            <div class="len-font">
+                <ul class="select-length">
+
+                    <li>
+
+                        <input class="select_close" type="radio" name="length" id="length-close" value="" />
+                        <span class="select_label select_label-placeholder1">曲の長さ</span>
+                    </li>
+
+                    <li class="select_items">
+                        <input class="select_expand" type="radio" name="length" id="length-opener" />
+                        <label class="select_closeLabel" for="awesomeness-close"></label>
+
+                        <ul class="select_options">
+                            <li class="select_option">
+                                <input class="select_input" type="radio" name="length" id="length-15" value = "15"/>
+                                <label class="select_label" for="length-15">短め</label>
+                            </li>
+
+                            <li class="select_option">
+                                <input class="select_input" type="radio" name="length" id="length-30" value = "30"/>
+                                <label class="select_label" for="length-30">普通</label>
+                            </li>
+
+                            <li class="select_option">
+                                <input class="select_input" type="radio" name="length" id="length-60" value = "60" />
+                                <label class="select_label" for="length-60">長め</label>
+                            </li>
+
+                        </ul>
+
+                        <label class="select_expandLabel" for="length-opener"></label>
+                    </li>
+                </ul>
+
+                <ul class="select-font">
+
+                    <li>
+
+                        <input class="select_close" type="radio" name="font" id="font-close" value="" />
+                        <span class="select_label select_label-placeholder2">楽器</span>
+                    </li>
+
+                    <li class="select_items">
+                        <input class="select_expand" type="radio" name="font" id="font-opener" />
+                        <label class="select_closeLabel" for="awesomeness-close"></label>
+
+                        <ul class="select_options">
+                            <li class="select_option">
+                                <input class="select_input" type="radio" name="font" id="font-1" value = "0" />
+                                <label class="select_label" for="font-1">ピアノ</label>
+                            </li>
+
+                            <li class="select_option">
+                                <input class="select_input" type="radio" name="font" id="font-2" value = "59"/>
+                                <label class="select_label" for="font-2">トランペット</label>
+                            </li>
+
+                            <li class="select_option">
+                                <input class="select_input" type="radio" name="font" id="font-3" value = "24"/>
+                                <label class="select_label" for="font-3">ギター</label>
+                            </li>
+
+                            <li class="select_option">
+                                <input class="select_input" type="radio" name="font" id="font-4" value = "107" />
+                                <label class="select_label" for="font-4">琴</label>
+                            </li>
+
+                            <li class="select_option">
+                                <input class="select_input" type="radio" name="font" id="font-5" value = "13" />
+                                <label class="select_label" for="font-5">マリンバ</label>
+                            </li>
+
+                        </ul>
+
+                        <label class="select_expandLabel" for="font-opener"></label>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="button" type="submit">生成</button>
         </form>
-        </div>
-    </main>
+
+</main>
+
+<script>
+
+</script>
+
 {% endblock %}
