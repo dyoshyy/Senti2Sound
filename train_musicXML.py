@@ -179,5 +179,5 @@ else:
 
 print("train comleted")
 
-shutil.move(model_weights_path, r'models\\'+str(senti) + "\\" + model_weights_path)
-shutil.move(model_save_path, r'models\\'+str(senti) + "\\" + model_save_path)
+shutil.move(model_weights_path, r'models\\' + model_weights_path)
+shutil.move(model_save_path, r'models\\' + model_save_path)

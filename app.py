@@ -15,7 +15,10 @@ def index():
 def post_senti():
     if request.method == "POST":
         senti = request.form['senti']
-        length = int(request.form.get('length')) * 5
+        if request.form.get('length'):
+            length = int(request.form.get('length')) * 5
+        else:
+            length = 50
         inst_id = int(request.form.get('font'))
         result = analyze_sentiment(senti)
         session['senti'] = result

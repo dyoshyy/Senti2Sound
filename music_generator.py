@@ -17,7 +17,8 @@ def generate(senti,length,inst_id):
     DS = os.sep
     bs = os.path.dirname(__file__) + DS
 
-    xmlpath = bs + 'musicxml\\' + str(senti) + DS
+    #xmlpath = bs + 'musicxml\\' + str(senti) + DS
+    xmlpath = os.path.join("musicxml", str(senti))
 
     '''
     model_path_base = bs + 'models\\' + str(senti) + '\\model_' + str(senti)
