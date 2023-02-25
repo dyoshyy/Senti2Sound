@@ -19,10 +19,14 @@ def generate(senti,length,inst_id):
 
     xmlpath = bs + 'musicxml\\' + str(senti) + DS
 
+    '''
     model_path_base = bs + 'models\\' + str(senti) + '\\model_' + str(senti)
     model_weights_path = model_path_base + 'w.hdf5' 
     model_save_path = model_path_base + '.hdf5' 
-
+    '''
+    model_name = "model_" + str(senti)
+    model_weights_path = os.path.join("models", model_name + "w.hdf5")
+    model_save_path = os.path.join("models", model_name + ".hdf5")
     music_keys = ('C')
 
     # テキストの生成
