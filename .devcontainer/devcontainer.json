@@ -1,7 +1,6 @@
 {
   "name": "python",
-  "dockerFile": "Dockerfile",
-  "workspaceFolder": "/workspace",
+  "dockerFile": "../Dockerfile",
   "customizations": {
       "vscode": {
           "extensions": [
