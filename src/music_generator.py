@@ -74,15 +74,9 @@ def process_xml_files(xmlpath, music_keys):
 
 def generate(senti, length, inst_id):
 
-    DS = os.sep
-    bs = os.path.dirname(__file__) + DS
-
-    # xmlpath = bs + 'musicxml\\' + str(senti) + DS
-    xmlpath = os.path.join("musicxml", str(senti))
-
-    model_name = "model_" + str(senti)
-    model_weights_path = os.path.join("models", model_name + "w.hdf5")
-    model_save_path = os.path.join("models", model_name + ".hdf5")
+    xmlpath = f"./assets/musicxml/{senti}/"
+    # model_path = os.path.join("models", model_name + ".hdf5")
+    model_path = f"./static/models/{senti}.keras"
     music_keys = "C"
 
     # テキストの生成
@@ -93,7 +87,6 @@ def generate(senti, length, inst_id):
     count = 0
 
     char_indices = {}  # 辞書
-    indices_char = {}  # 逆引き辞書
     for word in chars:
         if not word in char_indices:
             char_indices[word] = count
@@ -108,23 +101,21 @@ def generate(senti, length, inst_id):
         next_chars.append(text[i + MAX_LENGTH])
 
     # モデルがある場合は読み込む,なければ学習
-    if os.path.exists(model_save_path) and os.path.exists(model_weights_path):
-        model = tf.keras.models.load_model(model_save_path, compile=False)
-        # model = load_model(model_save_path,compile=False)
-        model.load_weights(model_weights_path)
+    if os.path.exists(model_path):
+        model = tf.keras.models.load_model(model_path, compile=False)
+        # model = load_model(model_path,compile=False)
+        # model.load_weights(model_weights_path)
     else:
         print("--------Model does not exist----------")
+        
 
     melo_sentence = make_melody(model, text, char_indices, indices_char, length)
-    # print(melo_sentence)
     # メロディをmusicXMLに変換する
     meas = m21.stream.Stream()
     meas.append(m21.meter.TimeSignature("4/4"))
 
-    # instr = instrument.Trumpet()
     instr = instrument.instrumentFromMidiProgram(inst_id)
     meas.insert(instr)
-    # instr.midiProgram = 56
 
     melo = melo_sentence.split()
     for m in melo:
