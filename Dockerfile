@@ -10,5 +10,9 @@ RUN poetry config virtualenvs.create false \
 RUN mkdir -p /opt/mnt
 WORKDIR /opt/mnt
 
+ENV FLASK_APP=app/app.py
+
 # expose port
-EXPOSE 8888
+EXPOSE 8080
+
+CMD ["gunicorn", "--bind" , ":8080", "--workers", "2", "src.app:app"]
