@@ -71,7 +71,7 @@ if __name__ == "__main__":
     epochs = 100
     batch_size = 128
 
-    xmlpath = "../musicxml/" + senti
+    xmlpath = "./assets/musicxml/" + senti
     model_save_path = f"./static/models/{senti}.keras"
     make_model = True
     music_keys = "C"
