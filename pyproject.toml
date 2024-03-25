@@ -20,6 +20,7 @@ tqdm = "^4.66.2"
 nltk = "^3.8.1"
 numpy = "^1.26.4"
 tensorflow = "^2.16.1"
+gunicorn = "^21.2.0"
 
 [tool.isort]
 profile = "black"

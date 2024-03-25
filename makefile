@@ -1,3 +1,3 @@
 run:
 	@echo "Running app.py"
-	python3 ./src/app.py
+	gunicorn src.app:app
