@@ -1,23 +1,25 @@
 from __future__ import print_function
-import tensorflow as tf
-from tensorflow.python.keras.callbacks import LambdaCallback
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.models import load_model
-from tensorflow.python.keras.layers import Dense
-from tensorflow.python.keras.layers import LSTM
-import numpy as np
+
+import glob
+import os
 import random
 import sys
-from tqdm import tqdm
+
 import music21 as m21
-import os
-import glob
+import numpy as np
+import tensorflow as tf
 from tensorflow.python.client import device_lib
+from tensorflow.python.keras.callbacks import LambdaCallback
+from tensorflow.python.keras.layers import LSTM, Dense
+from tensorflow.python.keras.models import Sequential, load_model
+from tqdm import tqdm
+
 device_lib.list_local_devices()
-from fractions import Fraction
-from music21 import *
 import shutil
 import sys
+from fractions import Fraction
+
+from music21 import *
 
 args = sys.argv
 #senti = input("input the senti:")

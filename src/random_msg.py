@@ -1,5 +1,6 @@
 import random
 
+
 def get_message():
     messages = [
         "あなたの気分にぴったりの曲が完成しました！",

@@ -1,5 +1,6 @@
-from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+
 nltk.download('vader_lexicon')
 
 # 単語の感情分析

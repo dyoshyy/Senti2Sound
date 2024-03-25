@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, send_from_directory, session
-from sentiment_analyzer import analyze_sentiment
-from music_generator import generate
 import os
+
+from flask import Flask, render_template, request, send_from_directory, session
+
+from music_generator import generate
 from random_msg import get_message
+from sentiment_analyzer import analyze_sentiment
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 

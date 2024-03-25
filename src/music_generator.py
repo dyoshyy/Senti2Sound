@@ -1,16 +1,17 @@
 from __future__ import print_function
-from tensorflow.python.keras.models import load_model
-import numpy as np
-import random
-from tqdm import tqdm
-import music21 as m21
-from music21 import *
 
-import os
 import glob
+import os
+import random
 import shutil
-
 from fractions import Fraction
+
+import music21 as m21
+import numpy as np
+from music21 import *
+from tensorflow.python.keras.models import load_model
+from tqdm import tqdm
+
 
 def generate(senti,length,inst_id):
 
