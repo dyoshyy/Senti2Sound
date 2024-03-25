@@ -9,7 +9,9 @@ from fractions import Fraction
 import music21 as m21
 import numpy as np
 from music21 import *
-from tensorflow.python.keras.models import load_model
+# from tensorflow.python.keras.models import load_model
+import tensorflow as tf
+from tensorflow import keras
 from tqdm import tqdm
 
 MAX_LENGTH = 10 #時系列を何個ずつに分けて学習するか
@@ -24,7 +26,7 @@ def sample(preds, temperature=1.0):
     
     return np.argmax(probas)
 
-def make_melody(model, char_indices, indices_char, length=200):
+def make_melody(model, text, char_indices, indices_char, length=200):
     start_index = random.randint(0, len(text) - MAX_LENGTH - 1)
     for diversity in [0.2]:  # ここは0.2のみ？
 
@@ -103,12 +105,13 @@ def generate(senti,length,inst_id):
 
     #モデルがある場合は読み込む,なければ学習
     if (os.path.exists(model_save_path) and os.path.exists(model_weights_path)):
-        model = load_model(model_save_path,compile=False)
+        model = tf.keras.models.load_model(model_save_path, compile=False)
+        # model = load_model(model_save_path,compile=False)
         model.load_weights(model_weights_path)
     else:
         print('--------Model does not exist----------')
 
-    melo_sentence = make_melody(model, char_indices, indices_char, length)
+    melo_sentence = make_melody(model, text, char_indices, indices_char, length)
     # print(melo_sentence)
     # メロディをmusicXMLに変換する
     meas = m21.stream.Stream()
