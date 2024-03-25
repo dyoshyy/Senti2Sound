@@ -1,11 +1,14 @@
-from http.client import BAD_REQUEST
 import os
+import sys
+
+sys.path.insert(0, "/workspaces/Senti2Sound/src")
 
 from flask import Flask, abort, render_template, request, send_from_directory, session
 
-from music_generator import generate
-from random_msg import get_message
-from sentiment_analyzer import analyze_sentiment
+from my_modules.music_generator import generate
+from my_modules.random_msg import get_message
+from my_modules.sentiment_analyzer import analyze_sentiment
+
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
