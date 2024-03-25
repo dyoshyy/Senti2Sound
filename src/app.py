@@ -1,6 +1,7 @@
+from http.client import BAD_REQUEST
 import os
 
-from flask import Flask, render_template, request, send_from_directory, session
+from flask import Flask, abort, render_template, request, send_from_directory, session
 
 from music_generator import generate
 from random_msg import get_message
@@ -17,18 +18,21 @@ def index():
 
 @app.route("/generate", methods=["POST"])
 def post_senti():
-    if request.method == "POST":
-        senti = request.form["senti"]
-        if request.form.get("length"):
-            length = int(request.form.get("length")) * 5
-        else:
-            length = 50
-        inst_id = int(request.form.get("font"))
-        result = analyze_sentiment(senti)
-        session["senti"] = result
-        generate(result, length, inst_id)
-        msg = get_message()
-        return render_template("result.html", senti=result, msg=msg)
+    try:
+        if request.method == "POST":
+            senti = request.form["senti"]
+            if request.form.get("length"):
+                length = int(request.form.get("length")) * 5
+            else:
+                length = 50
+            inst_id = int(request.form.get("font"))
+            result = analyze_sentiment(senti)
+            session["senti"] = result
+            generate(result, length, inst_id)
+            msg = get_message()
+            return render_template("result.html", senti=result, msg=msg)
+    except Exception as e:
+        abort(e.code)
 
 
 @app.route("/download")
@@ -38,7 +42,6 @@ def download():
     dir = "static/generated"
     return send_from_directory(dir, path)
 
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
-    # app.run(debug=True)
+    # app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    app.run(debug=True)
