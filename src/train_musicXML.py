@@ -42,8 +42,8 @@ def on_epoch_end(epoch, _):
         generated += "".join(sentence)
         # print(sentence)
 
-        print('--------- Generating with seed:"' + "".join(sentence) + '"')
-        sys.stdout.write(generated)
+        # print('--------- Generating with seed:"' + "".join(sentence) + '"')
+        # sys.stdout.write(generated)
 
         for i in range(100):
             x_pred = np.zeros((1, maxlen, len(char_indices)))  # len(chars) → len(char_indices)に変更
@@ -61,43 +61,29 @@ def on_epoch_end(epoch, _):
             sentence = sentence[1:]
             sentence.append(next_char)
 
-            sys.stdout.write(next_char)
-            sys.stdout.flush()
+            # sys.stdout.write(next_char)
+            # sys.stdout.flush()
         print()
 
-
-def on_train_end(logs):
-    print("----- saving model...")
-    model.save_weights(model_weights_path)
-    model.save(model_save_path)
-
-
 if __name__ == "__main__":
-
     args = sys.argv
-    # senti = input("input the senti:")
     senti = args[1]
-    epochs = 300
+    epochs = 100
+    batch_size = 128
 
     xmlpath = "../musicxml/" + senti
-    model_weights_path = "model_" + senti + "w.hdf5"
-    model_save_path = "model_" + senti + ".hdf5"
+    model_save_path = f"./static/models/{senti}.keras"
     make_model = True
-    # music_keys = ('C', 'D', 'E', 'F', 'F#', 'G', 'A', 'B')
     music_keys = "C"
 
-    # テキストの生成
     text = []
 
-    # フォルダ内のxmlファイルを取得する
     xmls = glob.glob(xmlpath + "/*")
     for x in tqdm(xmls):
-        # xmlを読み込む
         piece = m21.converter.parse(x)
 
         for trans_key in music_keys:
             k = piece.analyze("key")
-            # 主音を合わせる
             trans = trans_key
             i = m21.interval.Interval(k.tonic, m21.pitch.Pitch(trans))
             trans_piece = piece.transpose(i)
@@ -106,23 +92,20 @@ if __name__ == "__main__":
                     text.append(str(n.name) + "_" + str(n.duration.quarterLength) + " ")
                 elif type(n) == m21.chord.Chord:
                     pitches = "~".join([pitche.name for pitche in n.pitches])
-                    # print(pitches)
                     text.append(str(pitches) + "_" + str(n.duration.quarterLength) + " ")
 
-    # ここからLSTM
     print("--------- start LSTM")
     chars = text
     count = 0
-    char_indices = {}  # 辞書
-    indices_char = {}  # 逆引き辞書
+    char_indices = {}
+    indices_char = {}
     for word in chars:
-        if not word in char_indices:
+        if word not in char_indices:
             char_indices[word] = count
             count += 1
-            print(count, word)  # 登録した単語を表示
-    # 逆引き辞書を辞書から作成する
+            # print(count, word)
     indices_char = dict([(value, key) for (key, value) in char_indices.items()])
-    maxlen = 10  # 時系列を何個ずつに分けて学習するか
+    maxlen = 10
     step = 1
     sentences = []
     next_chars = []
@@ -132,35 +115,22 @@ if __name__ == "__main__":
     print("nb sequences:", len(sentences))
 
     print("sentence:")
-    # モデル生成準備
     print("Vectorization...")
-    x = np.zeros((len(sentences), maxlen, len(char_indices)), dtype=bool)  # len(chars)→len(char_indices)に変更
-    y = np.zeros((len(sentences), len(char_indices)), dtype=bool)  # len(chars)→len(char_indices)に変更
+    x = np.zeros((len(sentences), maxlen, len(char_indices)), dtype=bool)
+    y = np.zeros((len(sentences), len(char_indices)), dtype=bool)
     for i, sentence in enumerate(sentences):
         for t, char in enumerate(sentence):
             x[i, t, char_indices[char]] = 1
             y[i, char_indices[next_chars[i]]] = 1
 
-    # モデル定義
     print("Build model...")
     model = tf.keras.models.Sequential()
-    model.add(tf.keras.layers.LSTM(500, input_shape=(maxlen, len(char_indices))))  # len(chars) → len(char_indices)に変更
-    model.add(tf.keras.layers.Dense(len(char_indices), activation="softmax"))  # len(chars) → len(char_indices)に変更
-    # opt = tf.optimizers.SGD(learning_rate=0.01)
+    model.add(tf.keras.layers.Input(shape=(maxlen, len(char_indices))))
+    model.add(tf.keras.layers.LSTM(500))
+    model.add(tf.keras.layers.Dense(len(char_indices), activation="softmax"))
     model.compile(loss="categorical_crossentropy", optimizer="adam", run_eagerly=True)
-    # model.summary()
-
-    # モデルがある場合は読み込む　なければ学習
-    if os.path.exists(model_save_path) and os.path.exists(model_weights_path):
-        print("-----------read Model")
-        model = load_model(model_save_path, compile=False)
-        model.load_weights(model_weights_path)
-    else:
-        print_callback = LambdaCallback(on_epoch_end=on_epoch_end, on_train_end=on_train_end)
-        es_cb = tf.keras.callbacks.EarlyStopping(monitor="loss", patience=5, verbose=0, mode="auto")
-        model.fit(x, y, batch_size=32, epochs=epochs, callbacks=[es_cb, print_callback])
-
-    print("train completed")
-
-    shutil.move(model_weights_path, r"models\\" + model_weights_path)
-    shutil.move(model_save_path, r"models\\" + model_save_path)
+    
+    print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
+    es_cb = tf.keras.callbacks.EarlyStopping(monitor="loss", patience=5, verbose=0, mode="auto")
+    model.fit(x, y, batch_size=batch_size, epochs=epochs, callbacks=[es_cb, print_callback])
+    model.save(model_save_path)
