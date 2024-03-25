@@ -1,7 +1,14 @@
 FROM python:3.10
-USER root
 
-RUN apt-get update && \
-    apt-get -y install --reinstall ca-certificates && \
-    apt-get -y install software-properties-common && \
-    pip install --upgrade pip
+# install python package
+COPY pyproject.toml ./
+RUN pip install poetry
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-root
+
+# mount dir
+RUN mkdir -p /opt/mnt
+WORKDIR /opt/mnt
+
+# expose port
+EXPOSE 8888
