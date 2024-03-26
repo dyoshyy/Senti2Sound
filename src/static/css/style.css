@@ -242,11 +242,65 @@ main {
   top: 0;
 }
 
-.submit {
-  padding: 100px 0;
+form {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
+.title{
+  font-size: 30px;
+  margin-top: 120px;
+  font-weight: bold;
+  line-height: 80px;
+}
 
+.select span {
+  text-align: center;
+}
+
+h1 {
+  margin: 40px;
+}
+
+.submit label {
+  font-size: 24px;
+}
+
+.text-box {
+  width: 35%;
+  margin: 3%;
+  height: 80px;
+  font-size: 35px;
+  text-align: center;
+  transition: all 0.2s ease;
+  border: 2px solid #c5b840;
+}
+
+.text-box:focus {
+  width: 550px;
+}
+
+.len-font{
+  display: flex;
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  justify-content: space-between;
+}
+
+.select{
+  width: 30%;
+  height: 10%;
+  cursor: pointer;
+  background-color: white;
+  box-shadow: 0 2px 0 white;
+  border-radius: 5px;
+  text-align: center;
+  margin: 5%;
+}
 
 /* 表（数値を入力する部分）の設定 */
 table {
@@ -282,10 +336,8 @@ td {
 /* 「click」ボタンのスタイル */
 .button {
   text-align: center;
-  margin: 10px auto;
-  margin-top: 150px;
-  padding: 1px;
-  width: 120px;
+  margin: 5%;
+  width: 20%;
   font-size: 25px;
   font-weight: bold;
   color: black;
@@ -295,7 +347,7 @@ td {
 }
 
 .button:hover {
-  background-color: rgb(250, 200, 63);
+  background-color: rgb(255, 243, 210);
   transition: all 0.4s ease;
 }
 
@@ -313,7 +365,7 @@ td {
   text-align: center;
 }
 
-.title{
+.about.title{
   margin-top : 10px;
   margin-bottom: 30px;
   color: #fff;
@@ -476,9 +528,6 @@ progress {
   -webkit-appearance: none;
 }
 
-
-
-
 .select_expand {
   width: 0;
   height: 40px;
@@ -513,9 +562,9 @@ progress {
   display: block;
   width: 100%;
   height: 40px;
-  position: absolute;
   top: 0;
   left: 0;
+  position: absolute;
   cursor: pointer;
 }
 
@@ -554,28 +603,18 @@ progress {
   line-height: 40px;
   overflow: hidden;
   color: #3e3e3e;
-  background-color: #fff;
+  background-color: #ffffff;
   cursor: pointer;
-  padding-left: 20px;
-}
-.select_label-placeholder1 {
-  height: 40px;
-  vertical-align: middle;
-  position: absolute;
-  top: 0;
-  left: 40px;
-  opacity: .6;
-  background-color: transparent;
+  text-align: center;
 }
 
-.select_label-placeholder2 {
+.select_label-placeholder {
   height: 40px;
+  width: 100%;
   vertical-align: middle;
   position: absolute;
-  top: 0;
-  left: 90px;
-  opacity: .6;
-  background-color: transparent;
+  /* opacity: .6; */
+  text-align: center;
 }
 
 .select_expand:checked+.select_closeLabel {

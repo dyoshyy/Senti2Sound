@@ -1,75 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-<style>
-
-
-    .title{
-        font-size: 30px;
-        margin-top: 120px;
-        font-weight: bold;
-        line-height: 80px;
-    }
-
-    .select span {
-        text-align: center;
-    }
-
-    h1 {
-        margin: 40px;
-    }
-
-    .submit label {
-        font-size: 24px;
-    }
-
-    .text-box {
-        width: 400px;
-        height: 80px;
-        font-size: 35px;
-        text-align: center;
-        transition: all 0.2s ease;
-        border: 2px solid #c5b840;
-    }
-
-    .text-box:focus {
-        width: 550px;
-    }
-
-    .select-length {
-        float: left;
-        width: 200px;
-        height: 40px;
-        cursor: pointer;
-        background-color: white;
-        box-shadow: 0 2px 0 white;
-        border-radius: 5px;
-        text-align: center;
-        margin-left: 35%;
-        margin-right: 0 auto;
-        margin-top: 50px;
-    }
-
-
-
-    .select-font {
-        float: right;
-        width: 250px;
-        height: 40px;
-        cursor: pointer;
-        background-color: white;
-        box-shadow: 0 2px 0 white;
-        border-radius: 5px;
-        text-align: center;
-        margin-right: 35%;
-        margin-left: 0 auto;
-        margin-top: 50px;
-    }
-
-
-</style>
 
 <main>
-
 
     <div class="title">
         今の気分を入力してください<br>
@@ -79,15 +11,17 @@
     <div class="submit">
 
         <form action="generate" method="post">
-            <input class="text-box" type="text" id="feeling" placeholder="例）疲れた,ワクワク" name="senti">
+
+            <input class="text-box" type="text" id="feeling" placeholder="例）楽しい、疲れた" name="senti">
 
             <div class="len-font">
-                <ul class="select-length">
+                <ul class="select">
 
                     <li>
-
                         <input class="select_close" type="radio" name="length" id="length-close" value="" />
-                        <span class="select_label select_label-placeholder1">曲の長さ</span>
+                        <span class="select_label select_label-placeholder">
+                            曲の長さ
+                        </span>
                     </li>
 
                     <li class="select_items">
@@ -116,12 +50,12 @@
                     </li>
                 </ul>
 
-                <ul class="select-font">
+                <ul class="select">
 
                     <li>
 
                         <input class="select_close" type="radio" name="font" id="font-close" value="" />
-                        <span class="select_label select_label-placeholder2">楽器</span>
+                        <span class="select_label select_label-placeholder">楽器</span>
                     </li>
 
                     <li class="select_items">
@@ -163,11 +97,8 @@
 
             <button class="button" type="submit">生成</button>
         </form>
+    </div>
 
 </main>
-
-<script>
-
-</script>
 
 {% endblock %}
