@@ -1,2 +1,5 @@
 progress.txt
 /src/static/generated/
+
+# cache files
+*.pyc
