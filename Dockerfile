@@ -16,4 +16,4 @@ ENV FLASK_APP=src/app.py
 # expose port
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind" , ":8000", "--workers", "2", "src.app:app"]
+CMD ["gunicorn", "--bind" , ":8000", "--workers", "1", "--timeout", "600", "src.app:app"]
