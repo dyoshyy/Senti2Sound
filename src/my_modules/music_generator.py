@@ -74,9 +74,9 @@ def process_xml_files(xmlpath, music_keys):
 
 def generate(senti, length, inst_id):
 
-    xmlpath = f"./assets/musicxml/{senti}/"
+    xmlpath = f"../assets/musicxml/{senti}/"
     # model_path = os.path.join("models", model_name + ".hdf5")
-    model_path = f"./static/models/{senti}.keras"
+    model_path = f"../static/models/{senti}.keras"
     music_keys = "C"
 
     # テキストの生成
@@ -133,5 +133,4 @@ def generate(senti, length, inst_id):
 
     meas.makeMeasures(inPlace=True)
     meas.write("midi", str(senti) + ".mid")
-    shutil.move(str(senti) + ".mid", r"static\\generated\\" + str(senti) + ".mid")
-    # meas.show('musicxml')
+    shutil.move(str(senti) + ".mid", f"../static/generated/{senti}.mid")
