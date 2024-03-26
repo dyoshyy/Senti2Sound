@@ -5,9 +5,9 @@ sys.path.insert(0, "/workspaces/Senti2Sound/src")
 
 from flask import Flask, abort, render_template, request, send_from_directory, session
 
-from my_modules.music_generator import generate
-from my_modules.random_msg import get_message
-from my_modules.sentiment_analyzer import analyze_sentiment
+from .my_modules.music_generator import generate
+from .my_modules.random_msg import get_message
+from .my_modules.sentiment_analyzer import analyze_sentiment
 
 
 app = Flask(__name__)
