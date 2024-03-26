@@ -35,7 +35,7 @@ def post_senti():
             msg = get_message()
             return render_template("result.html", senti=result, msg=msg)
     except Exception as e:
-        abort(e.code)
+        abort(400)
 
 
 @app.route("/download")
