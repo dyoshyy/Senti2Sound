@@ -306,6 +306,34 @@ td {
   font-size: 24px;
 }
 
+.about{
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.title{
+  margin-top : 10px;
+  margin-bottom: 30px;
+  color: #fff;
+  font-size: 2rem;
+}
+
+.content{
+  display: flex;
+  flex-flow: column;
+
+}
+
+.description{
+  margin-right: 15%;
+  margin-left: 15%;
+  padding : 10px;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
 /* *********************************　
 footerの設定
 *********************************** */
