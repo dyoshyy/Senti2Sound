@@ -74,9 +74,8 @@ def process_xml_files(xmlpath, music_keys):
 
 def generate(senti, length, inst_id):
 
-    xmlpath = f"../assets/musicxml/{senti}/"
-    # model_path = os.path.join("models", model_name + ".hdf5")
-    model_path = f"../static/models/{senti}.keras"
+    xmlpath = f"/workspaces/Senti2Sound/src/assets/musicxml/{senti}"
+    model_path = f"/workspaces/Senti2Sound/src/static/models/{senti}.keras"
     music_keys = "C"
 
     # テキストの生成
@@ -107,7 +106,6 @@ def generate(senti, length, inst_id):
         # model.load_weights(model_weights_path)
     else:
         print("--------Model does not exist----------")
-        
 
     melo_sentence = make_melody(model, text, char_indices, indices_char, length)
     # メロディをmusicXMLに変換する
@@ -133,4 +131,4 @@ def generate(senti, length, inst_id):
 
     meas.makeMeasures(inPlace=True)
     meas.write("midi", str(senti) + ".mid")
-    shutil.move(str(senti) + ".mid", f"../static/generated/{senti}.mid")
+    shutil.move(f"{senti}.mid", f"/workspaces/Senti2Sound/src/static/generated/{senti}.mid")
