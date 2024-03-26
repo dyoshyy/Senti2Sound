@@ -1,6 +1,7 @@
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
+nltk.data.path.append('/opt/nltk_data')
 nltk.download("vader_lexicon")
 
 # 単語の感情分析
