@@ -77,7 +77,7 @@ def generate(senti, length, inst_id):
     xmlpath = f"/workspaces/Senti2Sound/src/assets/musicxml/{senti}"
     model_path = f"/workspaces/Senti2Sound/src/static/models/{senti}.keras"
     music_keys = "C"
-
+    print("Current Directory:",os.getcwd())
     # テキストの生成
     text = process_xml_files(xmlpath, music_keys)
 
