@@ -9,8 +9,9 @@ RUN poetry config virtualenvs.create false \
 # mount dir
 RUN mkdir -p /opt/mnt
 WORKDIR /opt/mnt
+COPY . /opt/mnt/
 
-ENV FLASK_APP=app/app.py
+ENV FLASK_APP=src/app.py
 
 # expose port
 EXPOSE 8080
