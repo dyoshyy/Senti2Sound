@@ -280,7 +280,8 @@ h1 {
 }
 
 .text-box:focus {
-  width: 550px;
+  width: 40%;
+  border: 4px solid #e2d665;
 }
 
 .len-font{
