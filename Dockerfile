@@ -14,6 +14,6 @@ COPY . /opt/mnt/
 ENV FLASK_APP=src/app.py
 
 # expose port
-EXPOSE 8080
+EXPOSE 8000
 
 CMD ["gunicorn", "--bind" , ":8080", "--workers", "2", "src.app:app"]
