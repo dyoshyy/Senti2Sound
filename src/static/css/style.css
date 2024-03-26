@@ -570,3 +570,24 @@ progress {
   height: 40px;
   margin-top: -40px;
 }
+
+nav ul li a {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+nav ul li a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+nav ul li a:hover::before {
+  background-color: #333;
+  transform: scaleX(1);
+}
