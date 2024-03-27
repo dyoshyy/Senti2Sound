@@ -131,4 +131,4 @@ def generate(senti, length, inst_id):
 
     meas.makeMeasures(inPlace=True)
     meas.write("midi", str(senti) + ".mid")
-    shutil.move(f"{senti}.mid", f"/workspaces/Senti2Sound/src/static/generated/{senti}.mid")
+    shutil.move(f"{senti}.mid", f"./src/static/generated/{senti}.mid")
