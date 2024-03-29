@@ -15,9 +15,12 @@ import tensorflow as tf
 from tensorflow import keras
 from tqdm import tqdm
 
+from memory_profiler import profile
+
 MAX_LENGTH = 10  # 時系列を何個ずつに分けて学習するか
 
 # モデル生成準備
+@profile
 def sample(preds, temperature=1.0):
     preds = np.asarray(preds).astype("float64")
     preds = np.log(preds) / temperature
@@ -27,7 +30,7 @@ def sample(preds, temperature=1.0):
 
     return np.argmax(probas)
 
-
+@profile
 def make_melody(model, text, char_indices, indices_char, length=200):
     start_index = random.randint(0, len(text) - MAX_LENGTH - 1)
     for diversity in [0.2]:  # ここは0.2のみ？
@@ -52,7 +55,7 @@ def make_melody(model, text, char_indices, indices_char, length=200):
 
     return generated
 
-
+@profile
 def process_xml_files(xmlpath, music_keys):
     text = []
     xmls = glob.glob(xmlpath + "/*")
@@ -71,7 +74,7 @@ def process_xml_files(xmlpath, music_keys):
                     text.append(str(pitches) + "_" + str(n.duration.quarterLength) + " ")
     return text
 
-
+@profile
 def generate(senti, length, inst_id):
 
     xmlpath = f"./src/assets/musicxml/{senti}"
