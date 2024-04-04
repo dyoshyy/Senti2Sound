@@ -46,7 +46,7 @@ def post_senti():
 def download():
     senti = session.get("senti")
     path = senti + ".mid"
-    dir = "static/generated"
+    dir = "./src/static/generated"
     return send_from_directory(dir, path)
 
 if __name__ == "__main__":

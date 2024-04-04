@@ -2,7 +2,7 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.corpus.util import LazyCorpusLoader
 
-nltk.data.path.append('/opt/nltk_data')
+# nltk.data.path.append('/opt/nltk_data')
 nltk.download('vader_lexicon')
 
 # 単語の感情分析
