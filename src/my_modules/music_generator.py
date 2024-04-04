@@ -124,6 +124,4 @@ def generate(senti, length, inst_id):
         meas.append(n)
 
     meas.makeMeasures(inPlace=True)
-    current_path = os.getcwd()
-    print(current_path)
     meas.write("midi", f"./src/static/generated/{str(senti)}.mid")
