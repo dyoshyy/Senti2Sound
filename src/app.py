@@ -1,5 +1,6 @@
 import os
 import sys
+import traceback
 
 sys.path.insert(0, "/workspaces/Senti2Sound/src")
 
@@ -39,8 +40,8 @@ def post_senti():
             msg = get_message()
             return render_template("result.html", senti=result, msg=msg)
     except Exception as e:
-        print(e)
-        abort(400)
+        print("Error:", e)
+        traceback.print_exc()
 
 
 @app.route("/download", methods=["GET"])
