@@ -30,10 +30,11 @@ def post_senti():
             if request.form.get("length"):
                 length = int(request.form.get("length")) * 5
             else:
-                length = 50
+                length = 30
             inst_id = int(request.form.get("font"))
             result = analyze_sentiment(senti)
             session["senti"] = result
+            print(f"Sentiment: {result}")
             generate(result, length, inst_id)
             msg = get_message()
             return render_template("result.html", senti=result, msg=msg)
@@ -42,12 +43,13 @@ def post_senti():
         abort(400)
 
 
-@app.route("/download")
+@app.route("/download", methods=["GET"])
 def download():
-    senti = session.get("senti")
-    path = senti + ".mid"
-    dir = "./src/static/generated"
-    return send_from_directory(dir, path)
+    if request.method == "GET":
+        senti = session.get("senti")
+        path = senti + ".mid"
+        dir = "./static/generated"
+        return send_from_directory(dir, path)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)), debug=True)

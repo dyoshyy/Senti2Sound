@@ -8,13 +8,9 @@ import sys
 import music21 as m21
 import numpy as np
 import tensorflow as tf
-from tensorflow.python.client import device_lib
 from tensorflow.python.keras.callbacks import LambdaCallback
-from tensorflow.python.keras.models import Sequential, load_model
 from tqdm import tqdm
 
-device_lib.list_local_devices()
-import shutil
 import sys
 
 from music21 import *
