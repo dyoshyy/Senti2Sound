@@ -27,17 +27,28 @@ def about():
 def post_senti():
     try:
         if request.method == "POST":
+            
             senti = request.form["senti"]
+            
+            # 曲の長さを指定
             if request.form.get("length"):
                 length = int(request.form.get("length")) * 5
             else:
                 length = 30
+                
+            # 楽器の種類を指定
             inst_id = int(request.form.get("font"))
+            
+            # 単語から感情を分析
             result = analyze_sentiment(senti)
             session["senti"] = result
-            print(f"Sentiment: {result}")
+            
+            # 楽曲生成
             generate(result, length, inst_id)
+            
+            # ひとことメッセージを生成
             msg = get_message()
+            
             return render_template("result.html", senti=result, msg=msg)
     except Exception as e:
         print("Error:", e)

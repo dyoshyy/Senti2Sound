@@ -124,4 +124,8 @@ def generate(senti, length, inst_id):
         meas.append(n)
 
     meas.makeMeasures(inPlace=True)
+    # if not os.path.exists("../static/generated"):
+    #     print("Directory does not exist")
+    #     os.makedirs("../static/generated")
     meas.write("midi", f"../static/generated/{str(senti)}.mid")
+    
