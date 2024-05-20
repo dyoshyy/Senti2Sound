@@ -37,7 +37,10 @@ def post_senti():
                 length = 30
                 
             # 楽器の種類を指定
-            inst_id = int(request.form.get("font"))
+            if request.form.get("font"):
+                inst_id = int(request.form.get("font"))
+            else:
+                inst_id = 0
             
             # 単語から感情を分析
             result = analyze_sentiment(senti)
@@ -65,4 +68,4 @@ def download():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)), debug=True)
-    # app.run(debug=True)
+    app.run(debug=True)
