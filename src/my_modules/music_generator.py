@@ -68,10 +68,10 @@ def process_xml_files(xmlpath, music_keys):
     return text
 
 def generate(senti, length, inst_id):
-
     xmlpath = f"./src/assets/musicxml/{senti}"
     model_path = f"./src/static/models/{senti}.keras"
     music_keys = "C"
+    
     # テキストの生成
     text = process_xml_files(xmlpath, music_keys)
 
@@ -84,6 +84,7 @@ def generate(senti, length, inst_id):
         if not word in char_indices:
             char_indices[word] = count
             count += 1
+            
     # 逆引き辞書を辞書から作成する
     indices_char = dict([(value, key) for (key, value) in char_indices.items()])
     step = 1
@@ -96,12 +97,11 @@ def generate(senti, length, inst_id):
     # モデルがある場合は読み込む,なければ学習
     if os.path.exists(model_path):
         model = tf.keras.models.load_model(model_path, compile=False)
-        # model = load_model(model_path,compile=False)
-        # model.load_weights(model_weights_path)
     else:
         print("--------Model does not exist----------")
 
     melo_sentence = make_melody(model, text, char_indices, indices_char, length)
+    
     # メロディをmusicXMLに変換する
     meas = m21.stream.Stream()
     meas.append(m21.meter.TimeSignature("4/4"))
@@ -124,8 +124,7 @@ def generate(senti, length, inst_id):
         meas.append(n)
 
     meas.makeMeasures(inPlace=True)
-    # if not os.path.exists("../static/generated"):
-    #     print("Directory does not exist")
-    #     os.makedirs("../static/generated")
-    meas.write("midi", f"../static/generated/{str(senti)}.mid")
+    if not os.path.exists("./src/static/generated"):
+        os.mkdir("./src/static/generated")
+    meas.write("midi", f"./src/static/generated/{str(senti)}.mid")
     
